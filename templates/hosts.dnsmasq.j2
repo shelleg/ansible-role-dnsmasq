@@ -1,0 +1,9 @@
+# {{ ansible_managed }}
+# Do not edit manually unless you know what your doing ;)
+
+{% for host in shelleg_hosts.infra %}
+{{ host.ip }} {{ shelleg.prefix}}-{{ host.cname }}
+{% endfor %}
+{% for host in shelleg_hosts.swarm %}
+{{ host.ip }} {{ shelleg.prefix}}-{{ host.cname }}
+{% endfor %}

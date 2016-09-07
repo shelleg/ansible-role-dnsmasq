@@ -1,0 +1,47 @@
+---
+# tasks file for dnsmasq-docker-ansible-role
+
+- debug: var=dnsmasq_domain_name
+
+- name: "Generate hosts.dnsmasq file"
+  template:
+    src: "hosts.dnsmasq.j2"
+    dest: "/etc/hosts.dnsmasq"
+    owner: "root"
+    group: "root"
+    mode: 0744
+
+- name: "Set dnsmasq daemon options"
+  template:
+    src: "dnsmasq.conf.j2"
+    dest: "/etc/dnsmasq.conf"
+    owner: "root"
+    group: "root"
+    mode: 0744
+
+- name: "Create config dir"
+  file: state=directory name=/etc/dnsmasq.d owner=root group=root
+
+- name: "Set dnsmasq consul integration"
+  template:
+    src: "10-consul.j2"
+    dest: "/etc/dnsmasq.d/10-consul"
+    owner: "root"
+    group: "root"
+    mode: 0744
+#  when: with_consul is defined
+
+- name: "Run Docker dnsmasq container ..."
+  docker_container:
+    name: "{{ dnsmasq_service_name }}"
+    image: "{{ dnsmasq_container_name }}"
+    state: started
+    restart: yes
+    ports:
+      - "0.0.0.0:{{ dnsmasq_tcp_port }}:{{ dnsmasq_tcp_port }}"
+      - "0.0.0.0:{{ dnsmasq_udp_port }}:{{ dnsmasq_udp_port }}/udp"
+    volumes:
+      - /etc/dnsmasq.conf:/etc/dnsmasq.conf:ro
+      - /etc/hosts.dnsmasq:/etc/hosts.dnsmasq:ro
+      - /etc//etc/dnsmasq.d/10-consul:/etc/dnsmasq.d/10-consul:ro
+

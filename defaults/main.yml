@@ -1,0 +1,24 @@
+---
+# defaults file for dnsmasq-docker-ansible-role
+
+dnsmasq_service_name: dnsmasq
+dnsmasq_tcp_port: 53
+dnsmasq_udp_port: 53
+dnsmasq_container_prefix: shelleg/dnsmasq-centos
+dnsmasq_container_version: latest
+dnsmasq_container_name: "{{ dnsmasq_container_prefix }}:{{ dnsmasq_container_version }}"
+dnsmasq_local_hosts_file: /etc/hosts.dnsmasq
+dnsmasq_conf:
+  - domain-needed
+  - bogus-priv
+  - "domain={{ shelleg.domain_name | default('domain.local') }}"
+  - expand-hosts
+  - "local=/{{ shelleg.domain_name | default('domain.local') }}/"
+  - listen-address=0.0.0.0
+  - bind-interfaces
+  - no-hosts
+  - "addn-hosts={{ dnsmasq_local_hosts_file }}"
+  - conf-dir=/etc/dnsmasq.d
+dnsmasq_upstream_dns_servers:
+  - "{{ shelleg.primary_ns | default('8.8.8.8') }}"
+  - "{{ shelleg.secondary_ns | default('8.8.4.4') }}"

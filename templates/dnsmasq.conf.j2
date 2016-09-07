@@ -1,0 +1,11 @@
+# {{ ansible_managed }}
+# Do not edit manually unless you know what your doing ;)
+
+{% for i in dnsmasq_conf %}
+{{ i }}
+{% endfor %}
+
+{% for i in dnsmasq_upstream_dns_servers %}
+server={{ i }}
+{% endfor %}
+
