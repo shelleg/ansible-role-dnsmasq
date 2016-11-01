@@ -2,8 +2,11 @@
 # Do not edit manually unless you know what your doing ;)
 
 {% for host in shelleg_hosts.infra %}
-{{ host.ip }} {{ shelleg.prefix}}-{{ host.cname }}
+{{ host.ip }} {{ host.cname }}
 {% endfor %}
-{% for host in shelleg_hosts.swarm %}
-{{ host.ip }} {{ shelleg.prefix}}-{{ host.cname }}
+{% for host in shelleg_hosts.swarm.swarm_managers %}
+{{ host.ip }} {{ host.cname }}
+{% endfor %}
+{% for host in shelleg_hosts.swarm.swarm_workers %}
+{{ host.ip }} {{ host.cname }}
 {% endfor %}
