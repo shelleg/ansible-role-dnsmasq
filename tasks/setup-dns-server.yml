@@ -22,30 +22,6 @@
 - name: "Create config dir"
   file: state=directory name=/etc/dnsmasq.d owner=root group=root
 
-#- name: "Set dnsmasq consul integration"
-#  template:
-#    src: "10-consul.j2"
-#    dest: "/etc/dnsmasq.d/10-consul"
-#    owner: "root"
-#    group: "root"
-#    mode: 0744
-#  when: with_consul is defined
-
-#- name: "Create systemd service"
-#  template:
-#    src: docker-dnsmasq.service.j2
-#    dest: /etc/systemd/system/docker-dnsmasq.service
-#    owner: root
-#    group: root
-#    mode: 0644
-#  notify:
-#    - restart docker-dnsmasq
-#  register: dnsconf
-#
-#- name: "reload systemd"
-#  command: systemctl daemon-reload
-#  when: dnsconf.changed
-
 - name: "start dnsmasq service"
   service: name=dnsmasq state=started enabled=yes
   register: started
