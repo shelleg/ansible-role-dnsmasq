@@ -18,6 +18,7 @@
     owner: "root"
     group: "root"
     mode: 0744
+  notify: restart dnsmasq
 
 - name: "Create config dir"
   file: state=directory name=/etc/dnsmasq.d owner=root group=root

@@ -1,12 +1,12 @@
 # {{ ansible_managed }}
 # Do not edit manually unless you know what your doing ;)
 
-{% for host in shelleg_hosts.infra %}
+{% for host in hosts.infra %}
 {{ host.ip }} {{ host.cname }}
 {% endfor %}
-{% for host in shelleg_hosts.swarm.swarm_managers %}
+{% for host in hosts.swarm.swarm_managers %}
 {{ host.ip }} {{ host.cname }}
 {% endfor %}
-{% for host in shelleg_hosts.swarm.swarm_workers %}
+{% for host in hosts.swarm.swarm_workers %}
 {{ host.ip }} {{ host.cname }}
 {% endfor %}
