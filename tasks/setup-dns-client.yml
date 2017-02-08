@@ -9,5 +9,7 @@
   when: inventory_hostname != "{{ hosts.infra[0].cname }}"
 
 - name: "Set our new dns in /etc/resolv.conf"
-  template: src=resolv.conf.j2 dest=/etc/resolv.conf
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
 
